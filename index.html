@@ -51,7 +51,6 @@ async function loadProducts(){
 function render(){
  const q=el("search").value.trim().toLocaleLowerCase("tr-TR"),cat=el("category").value,min=Number(el("minimum").value),sort=el("sort").value;
  let items=products.filter(p=>
-  (!q||(p.name+" "+p.brand).toLocaleLowerCase("tr-TR").includes(q)) &&
   (cat==="all"||p.category===cat) &&
   (p.discount===null ? min===0 : p.discount>=min) &&
   (!favoritesOnly||favorites.has(p.id))
