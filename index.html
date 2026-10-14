@@ -1,99 +1,66 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#101827">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Fırsat Avcısı">
-  <link rel="manifest" href="manifest.webmanifest">
-  <title>Fırsat Avcısı</title>
-  <style>
-    :root{color-scheme:dark;--bg:#0b1220;--panel:#121d30;--panel2:#18263c;--text:#f4f7fb;--muted:#aab7ca;--line:#263750;--green:#66e3a2;--amber:#ffd27a;--blue:#8eb8ff}
-    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#101b2d 0,#0b1220 340px);color:var(--text);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    .wrap{max-width:760px;margin:auto;padding:20px 16px 44px}
-    header{padding:16px 2px 22px}.eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
-    h1{font-size:32px;line-height:1.08;margin:9px 0}.sub{color:var(--muted);line-height:1.45;margin:0;max-width:520px}
-    .notice{background:#302719;border:1px solid #67512a;color:#ffe4a6;border-radius:12px;padding:11px 13px;font-size:12px;line-height:1.4;margin:0 0 16px}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 11px}.stat b{display:block;font-size:20px;margin-bottom:4px}.stat span{font-size:11px;color:var(--muted)}
-    .controls{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:12px}.controls input,.controls select,.controls button{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px 12px;font:inherit;min-width:0}.controls input{flex:1;min-width:145px}.controls select{flex:1}
-    .controls button{cursor:pointer}.controls button.active{background:#234936;border-color:#367a56;color:#d5ffe8}
-    .sectionhead{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 12px;gap:10px}.sectionhead h2{font-size:18px;margin:0}.sectionhead span{font-size:12px;color:var(--muted)}
-    .list{display:grid;gap:11px}.product{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;grid-template-columns:54px 1fr;gap:12px}
-    .emoji{height:54px;width:54px;border-radius:13px;background:var(--panel2);display:grid;place-items:center;font-size:28px}
-    .producttop{display:flex;justify-content:space-between;gap:8px;align-items:start}.name{font-weight:750;line-height:1.3}.discount{background:#174a35;color:#a9ffd1;border-radius:8px;padding:5px 7px;font-size:12px;font-weight:800;white-space:nowrap}
-    .meta{color:var(--muted);font-size:12px;margin-top:5px}.prices{display:flex;align-items:baseline;gap:8px;margin-top:9px;flex-wrap:wrap}.current{font-size:21px;font-weight:800}.old{font-size:13px;color:#92a0b4;text-decoration:line-through}.score{font-size:11px;color:var(--green);margin-top:5px}
-    .actions{display:flex;gap:8px;margin-top:11px}.actions button,.actions a{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:9px;padding:8px 10px;font:inherit;font-size:12px;text-decoration:none;cursor:pointer}.actions .fav{color:var(--amber)}.empty{color:var(--muted);padding:24px;text-align:center;border:1px dashed var(--line);border-radius:14px}
-    footer{margin-top:24px;color:var(--muted);font-size:11px;line-height:1.5}
-    @media(min-width:600px){.wrap{padding-top:32px}.product{grid-template-columns:60px 1fr}.emoji{width:60px;height:60px}}
-  </style>
-</head>
-<body>
-<main class="wrap">
-  <header>
-    <div class="eyebrow">Teknoloji fırsat radarı</div>
-    <h1>Fırsat Avcısı</h1>
-    <p class="sub">Gerçek indirimleri yakalamak için fiyatı, geçmişi ve fırsat kalitesini tek yerde izle.</p>
-  </header>
-  <div class="notice"><b>Prototip verisi:</b> Bu ekrandaki ürün ve fiyatlar örnektir; canlı mağaza fiyatı değildir. Gerçek fiyat kaynakları sonraki aşamada bağlanacak.</div>
-  <section class="stats">
-    <div class="stat"><b id="count">0</b><span>Gösterilen fırsat</span></div>
-    <div class="stat"><b id="avg">—</b><span>Ortalama indirim</span></div>
-    <div class="stat"><b id="saved">0</b><span>Takip listem</span></div>
-  </section>
-  <div class="controls">
-    <input id="search" type="search" placeholder="Ürün ara (ör. SSD, telefon)" aria-label="Ürün ara">
-    <select id="category" aria-label="Kategori">
-      <option value="all">Tüm kategoriler</option><option value="Bilgisayar">Bilgisayar parçaları</option><option value="Telefon">Telefon ve aksesuar</option>
-    </select>
-  </div>
-  <div class="controls">
-    <select id="minimum" aria-label="Minimum indirim">
-      <option value="0">Her indirim oranı</option><option value="10">%10 ve üzeri</option><option value="20" selected>%20 ve üzeri</option><option value="30">%30 ve üzeri</option>
-    </select>
-    <select id="sort" aria-label="Sıralama">
-      <option value="score">Fırsat kalitesi</option><option value="discount">İndirim oranı</option><option value="price">En düşük fiyat</option>
-    </select>
-    <button id="favoritesOnly" type="button">♡ Takip ettiklerim</button>
-  </div>
-  <div class="sectionhead"><h2>Öne çıkan fırsatlar</h2><span id="resultLabel">Örnek liste</span></div>
-  <section class="list" id="products" aria-live="polite"></section>
-  <footer>Fırsat puanı şimdilik örnek bir hesaplamadır. Gerçek sürümde geçmiş fiyat verisi, mağaza güvenilirliği ve fiyatın ne kadar süredir geçerli olduğu dikkate alınacaktır. Takip listesi bu cihazın tarayıcısında saklanır.</footer>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101827"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Fırsat Avcısı">
+<link rel="manifest" href="manifest.webmanifest"><title>Fırsat Avcısı</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--panel:#121d30;--panel2:#18263c;--text:#f4f7fb;--muted:#aab7ca;--line:#263750;--green:#66e3a2;--amber:#ffd27a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#101b2d 0,#0b1220 340px);color:var(--text);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:760px;margin:auto;padding:20px 16px 44px}header{padding:16px 2px 22px}.eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}h1{font-size:32px;line-height:1.08;margin:9px 0}.sub{color:var(--muted);line-height:1.45;margin:0}.status{border:1px solid var(--line);background:var(--panel);padding:11px 13px;border-radius:12px;font-size:12px;line-height:1.5;margin:0 0 16px}.status.error{border-color:#7a3b3b;color:#ffc1c1}.status.ok{border-color:#286b4b;color:#b6ffd6}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 11px}.stat b{display:block;font-size:20px;margin-bottom:4px}.stat span{font-size:11px;color:var(--muted)}.controls{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:12px}.controls input,.controls select,.controls button{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px 12px;font:inherit;min-width:0}.controls input{flex:1;min-width:145px}.controls select{flex:1}.controls button{cursor:pointer}.controls button.active{background:#234936;border-color:#367a56}.sectionhead{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 12px;gap:10px}.sectionhead h2{font-size:18px;margin:0}.sectionhead span,.meta{font-size:12px;color:var(--muted)}.list{display:grid;gap:11px}.product{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;grid-template-columns:54px 1fr;gap:12px}.emoji{height:54px;width:54px;border-radius:13px;background:var(--panel2);display:grid;place-items:center;font-size:28px}.producttop{display:flex;justify-content:space-between;gap:8px;align-items:start}.name{font-weight:750;line-height:1.3}.discount{background:#174a35;color:#a9ffd1;border-radius:8px;padding:5px 7px;font-size:12px;font-weight:800;white-space:nowrap}.prices{display:flex;align-items:baseline;gap:8px;margin-top:9px;flex-wrap:wrap}.current{font-size:21px;font-weight:800}.old{font-size:13px;color:#92a0b4;text-decoration:line-through}.score{font-size:11px;color:var(--green);margin-top:5px}.actions{display:flex;gap:8px;margin-top:11px}.actions button{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:9px;padding:8px 10px;font:inherit;font-size:12px;cursor:pointer}.actions .fav{color:var(--amber)}.empty{color:var(--muted);padding:24px;text-align:center;border:1px dashed var(--line);border-radius:14px}footer{margin-top:24px;color:var(--muted);font-size:11px;line-height:1.5}@media(min-width:600px){.wrap{padding-top:32px}.product{grid-template-columns:60px 1fr}.emoji{width:60px;height:60px}}
+</style></head>
+<body><main class="wrap">
+<header><div class="eyebrow">Teknoloji fırsat radarı</div><h1>Fırsat Avcısı</h1><p class="sub">Gerçek indirimleri yakalamak için fiyatı, geçmişi ve fırsat kalitesini tek yerde izle.</p></header>
+<div id="status" class="status">Supabase bağlantısı kontrol ediliyor…</div>
+<section class="stats"><div class="stat"><b id="count">0</b><span>Gösterilen ürün</span></div><div class="stat"><b id="avg">—</b><span>Ortalama indirim</span></div><div class="stat"><b id="saved">0</b><span>Takip listem</span></div></section>
+<div class="controls"><input id="search" type="search" placeholder="Ürün ara (ör. SSD, telefon)" aria-label="Ürün ara"><select id="category" aria-label="Kategori"><option value="all">Tüm kategoriler</option><option value="Bilgisayar">Bilgisayar parçaları</option><option value="Telefon">Telefon ve aksesuar</option><option value="Diğer">Diğer</option></select></div>
+<div class="controls"><select id="minimum" aria-label="Minimum indirim"><option value="0">Her indirim oranı</option><option value="10">%10 ve üzeri</option><option value="20" selected>%20 ve üzeri</option><option value="30">%30 ve üzeri</option></select><select id="sort" aria-label="Sıralama"><option value="score">Fırsat kalitesi</option><option value="discount">İndirim oranı</option><option value="price">En düşük fiyat</option></select><button id="favoritesOnly" type="button">♡ Takip ettiklerim</button></div>
+<div class="sectionhead"><h2>Ürünler ve fırsatlar</h2><span id="resultLabel">Yükleniyor</span></div><section class="list" id="products" aria-live="polite"><div class="empty">Veriler yükleniyor…</div></section>
+<footer>Fiyatlar Supabase veritabanından okunur. İndirim oranı, en yeni fiyat ile önceki kayıtlı fiyat karşılaştırılabiliyorsa hesaplanır. Veritabanına gerçek mağaza fiyatı eklenmediyse burada gerçek fırsat görünmez. Tarayıcıda takip listesi bu cihazda saklanır.</footer>
 </main>
 <script>
-const products = [
- {id:1,name:"NVMe SSD 1 TB",brand:"Örnek marka",category:"Bilgisayar",emoji:"💾",price:1899,old:2799,store:"Örnek mağaza",discount:32,score:91,history:"Örnek: 90 günlük fiyat dip seviyesine yakın"},
- {id:2,name:"Kablosuz oyuncu faresi",brand:"Örnek marka",category:"Bilgisayar",emoji:"🖱️",price:1199,old:1599,store:"Örnek mağaza",discount:25,score:78,history:"Örnek: Son fiyatına göre belirgin düşüş"},
- {id:3,name:"USB-C hızlı şarj adaptörü",brand:"Örnek marka",category:"Telefon",emoji:"🔌",price:649,old:999,store:"Örnek mağaza",discount:35,score:84,history:"Örnek: İndirim oranı yüksek; satıcı kontrol edilmeli"},
- {id:4,name:"Kablosuz kulaklık",brand:"Örnek marka",category:"Telefon",emoji:"🎧",price:2299,old:2999,store:"Örnek mağaza",discount:23,score:74,history:"Örnek: Fiyat geçmişi doğrulanmalı"},
- {id:5,name:"DDR5 RAM 32 GB",brand:"Örnek marka",category:"Bilgisayar",emoji:"🧩",price:2799,old:3499,store:"Örnek mağaza",discount:20,score:69,history:"Örnek: Eşik seviyesinde indirim"}
-];
-const fmt=n=>new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",maximumFractionDigits:0}).format(n);
-let favorites = new Set(JSON.parse(localStorage.getItem("fa-favorites")||"[]"));
-let favoritesOnly=false;
+const SUPABASE_URL = "https://yvrzydhajlfdoylissok.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_PslURaSqr8xGwNsf-nTJWw_8zb0JMXI";
+const fmt=n=>new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",maximumFractionDigits:2}).format(n);
 const el=id=>document.getElementById(id);
+let products=[],favorites=new Set(JSON.parse(localStorage.getItem("fa-favorites")||"[]")),favoritesOnly=false;
+function status(message,type=""){el("status").className="status "+type;el("status").textContent=message}
+async function api(path){
+ const response=await fetch(SUPABASE_URL+"/rest/v1/"+path,{headers:{"apikey":SUPABASE_PUBLISHABLE_KEY,"Authorization":"Bearer "+SUPABASE_PUBLISHABLE_KEY}});
+ if(!response.ok){let body="";try{body=await response.text()}catch{}throw new Error("Supabase "+response.status+(body?": "+body.slice(0,220):""))}
+ return response.json()
+}
+async function loadProducts(){
+ try{
+  const raw=await api("products?select=id,name,brand,category,model_code&order=name.asc");
+  const listings=await api("store_listings?select=id,product_id,store_id,product_url,stores(name)");
+  const storeMap=new Map(listings.map(l=>[l.product_id,l]));
+  const ids=listings.map(l=>l.id);
+  let prices=[];
+  if(ids.length){prices=await api("price_snapshots?select=listing_id,price,captured_at,in_stock,shipping_cost&listing_id=in.("+ids.join(",")+")&order=captured_at.desc")}
+  const newest=new Map(),previous=new Map();
+  for(const p of prices){if(!newest.has(p.listing_id))newest.set(p.listing_id,p);else if(!previous.has(p.listing_id))previous.set(p.listing_id,p)}
+  products=raw.map(p=>{
+   const l=storeMap.get(p.id);const now=l?newest.get(l.id):null;const prev=l?previous.get(l.id):null;
+   const discount=now&&prev&&prev.price>0?Math.max(0,Math.round((prev.price-now.price)/prev.price*100)):null;
+   return {id:p.id,name:p.name,brand:p.brand||"",category:p.category,emoji:p.category==="Bilgisayar"?"💾":p.category==="Telefon"?"📱":"🔌",price:now?Number(now.price):null,old:prev?Number(prev.price):null,discount,score:discount===null?0:Math.min(100,discount*2),store:l?.stores?.name||"Mağaza eklenmedi",url:l?.product_url||"",history:now?"Son kayıt: "+new Date(now.captured_at).toLocaleString("tr-TR"):"Henüz fiyat kaydı yok"}
+  });
+  status("Supabase bağlantısı başarılı. "+raw.length+" ürün kaydı okundu. Canlı mağaza taraması henüz kurulmadı.","ok");
+  render()
+ }catch(e){status("Veritabanına erişilemedi. "+e.message+" — RLS politikalarını ve API bilgilerini kontrol et.","error");el("products").innerHTML='<div class="empty">Ürünler yüklenemedi. Supabase tablo izinlerini ve bağlantı ayarlarını kontrol et.</div>'}
+}
 function render(){
  const q=el("search").value.trim().toLocaleLowerCase("tr-TR"),cat=el("category").value,min=Number(el("minimum").value),sort=el("sort").value;
- let items=products.filter(p=>(!q||(p.name+" "+p.brand).toLocaleLowerCase("tr-TR").includes(q))&&(cat==="all"||p.category===cat)&&p.discount>=min&&(!favoritesOnly||favorites.has(p.id)));
- items.sort((a,b)=>sort==="discount"?b.discount-a.discount:sort==="price"?a.price-b.price:b.score-a.score);
+ let items=products.filter(p=>(!q||(p.name+" "+p.brand).toLocaleLowerCase("tr-TR").includes(q))&&(cat==="all"||p.category===cat)&&(p.discount??-1)>=min&&(!favoritesOnly||favorites.has(p.id)));
+ items.sort((a,b)=>sort==="discount"?(b.discount??-1)-(a.discount??-1):sort==="price"?(a.price??Infinity)-(b.price??Infinity):(b.score-a.score));
  el("count").textContent=items.length;el("saved").textContent=favorites.size;
- el("avg").textContent=items.length?Math.round(items.reduce((s,p)=>s+p.discount,0)/items.length)+"%":"—";
+ const withDiscount=items.filter(p=>p.discount!==null);el("avg").textContent=withDiscount.length?Math.round(withDiscount.reduce((s,p)=>s+p.discount,0)/withDiscount.length)+"%":"—";
  el("resultLabel").textContent=items.length+" ürün";
- el("products").innerHTML=items.length?items.map(p=>`<article class="product">
-  <div class="emoji" aria-hidden="true">${p.emoji}</div><div>
-   <div class="producttop"><div class="name">${p.name}</div><span class="discount">-%${p.discount}</span></div>
-   <div class="meta">${p.category==="Bilgisayar"?"Bilgisayar ve parçaları":"Telefon ve aksesuar"} · ${p.store}</div>
-   <div class="prices"><span class="current">${fmt(p.price)}</span><span class="old">${fmt(p.old)}</span></div>
-   <div class="score">Örnek fırsat puanı: ${p.score}/100</div><div class="meta">${p.history}</div>
-   <div class="actions"><button class="fav" data-fav="${p.id}">${favorites.has(p.id)?"★ Takip ediliyor":"☆ Takibe al"}</button><button data-info="${p.id}">Fırsat ayrıntısı</button></div>
-  </div></article>`).join(""):'<div class="empty">Bu filtrelerle eşleşen ürün bulunamadı.</div>';
+ el("products").innerHTML=items.length?items.map(p=>`<article class="product"><div class="emoji">${p.emoji}</div><div><div class="producttop"><div class="name">${escapeHtml(p.name)}</div><span class="discount">${p.discount===null?"Fiyat bekleniyor":"-%"+p.discount}</span></div><div class="meta">${escapeHtml(p.category)}${p.brand?" · "+escapeHtml(p.brand):""} · ${escapeHtml(p.store)}</div><div class="prices"><span class="current">${p.price===null?"Fiyat yok":fmt(p.price)}</span>${p.old!==null?`<span class="old">${fmt(p.old)}</span>`:""}</div><div class="score">${p.discount===null?"İndirim doğrulanamadı":"Kayıtlı fiyat değişimine göre: "+p.discount+"% düşüş"}</div><div class="meta">${escapeHtml(p.history)}</div><div class="actions"><button class="fav" data-fav="${escapeHtml(String(p.id))}">${favorites.has(p.id)?"★ Takip ediliyor":"☆ Takibe al"}</button>${p.url?`<button data-open="${escapeHtml(p.url)}">Mağazaya git</button>`:""}</div></div></article>`).join(""):'<div class="empty">Bu filtrelerle eşleşen ürün yok. Veritabanına ürün ekleyerek başlayabiliriz.</div>';
 }
-el("search").addEventListener("input",render);el("category").addEventListener("change",render);el("minimum").addEventListener("change",render);el("sort").addEventListener("change",render);
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+["search","category","minimum","sort"].forEach(id=>el(id).addEventListener(id==="search"?"input":"change",render));
 el("favoritesOnly").addEventListener("click",()=>{favoritesOnly=!favoritesOnly;el("favoritesOnly").classList.toggle("active",favoritesOnly);el("favoritesOnly").textContent=favoritesOnly?"♥ Takip ettiklerim açık":"♡ Takip ettiklerim";render()});
-el("products").addEventListener("click",e=>{const f=e.target.closest("[data-fav]");if(f){const id=Number(f.dataset.fav);favorites.has(id)?favorites.delete(id):favorites.add(id);localStorage.setItem("fa-favorites",JSON.stringify([...favorites]));render();return}const info=e.target.closest("[data-info]");if(info){const p=products.find(x=>x.id===Number(info.dataset.info));alert(p.name+"\\n\\n"+p.history+"\\n\\nBu sürüm örnek verilerle çalışıyor. Canlı fiyat geçmişi henüz bağlı değil.")}});
-if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js").catch(()=>{});
-render();
-</script>
-</body>
-</html>
+el("products").addEventListener("click",e=>{const f=e.target.closest("[data-fav]");if(f){const id=f.dataset.fav;favorites.has(id)?favorites.delete(id):favorites.add(id);localStorage.setItem("fa-favorites",JSON.stringify([...favorites]));render();return}const o=e.target.closest("[data-open]");if(o)window.open(o.dataset.open,"_blank","noopener,noreferrer")});
+if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
+loadProducts();
+</script></body></html>

@@ -1,7 +1,7 @@
 {
   "name": "Fırsat Avcısı",
   "short_name": "Fırsat Avcısı",
-  "description": "Teknoloji ürünlerinde indirim takip prototipi",
+  "description": "Teknoloji ürünlerinde indirim takip uygulaması",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0b1220",
