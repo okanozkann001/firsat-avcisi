@@ -7,6 +7,7 @@
 <style>
 :root{color-scheme:dark;--bg:#0b1220;--panel:#121d30;--panel2:#18263c;--text:#f4f7fb;--muted:#aab7ca;--line:#263750;--green:#66e3a2;--amber:#ffd27a}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#101b2d 0,#0b1220 340px);color:var(--text);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:760px;margin:auto;padding:20px 16px 44px}header{padding:16px 2px 22px}.eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}h1{font-size:32px;line-height:1.08;margin:9px 0}.sub{color:var(--muted);line-height:1.45;margin:0}.status{border:1px solid var(--line);background:var(--panel);padding:11px 13px;border-radius:12px;font-size:12px;line-height:1.5;margin:0 0 16px}.status.error{border-color:#7a3b3b;color:#ffc1c1}.status.ok{border-color:#286b4b;color:#b6ffd6}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 11px}.stat b{display:block;font-size:20px;margin-bottom:4px}.stat span{font-size:11px;color:var(--muted)}.controls{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:12px}.controls input,.controls select,.controls button{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px 12px;font:inherit;min-width:0}.controls input{flex:1;min-width:145px}.controls select{flex:1}.controls button{cursor:pointer}.controls button.active{background:#234936;border-color:#367a56}.sectionhead{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 12px;gap:10px}.sectionhead h2{font-size:18px;margin:0}.sectionhead span,.meta{font-size:12px;color:var(--muted)}.list{display:grid;gap:11px}.product{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;grid-template-columns:54px 1fr;gap:12px}.emoji{height:54px;width:54px;border-radius:13px;background:var(--panel2);display:grid;place-items:center;font-size:28px}.producttop{display:flex;justify-content:space-between;gap:8px;align-items:start}.name{font-weight:750;line-height:1.3}.discount{background:#174a35;color:#a9ffd1;border-radius:8px;padding:5px 7px;font-size:12px;font-weight:800;white-space:nowrap}.prices{display:flex;align-items:baseline;gap:8px;margin-top:9px;flex-wrap:wrap}.current{font-size:21px;font-weight:800}.old{font-size:13px;color:#92a0b4;text-decoration:line-through}.score{font-size:11px;color:var(--green);margin-top:5px}.actions{display:flex;gap:8px;margin-top:11px}.actions button{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:9px;padding:8px 10px;font:inherit;font-size:12px;cursor:pointer}.actions .fav{color:var(--amber)}.empty{color:var(--muted);padding:24px;text-align:center;border:1px dashed var(--line);border-radius:14px}footer{margin-top:24px;color:var(--muted);font-size:11px;line-height:1.5}@media(min-width:600px){.wrap{padding-top:32px}.product{grid-template-columns:60px 1fr}.emoji{width:60px;height:60px}}
+.deal-card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px}.deal-card h3{font-size:15px;line-height:1.4;margin:0 0 8px}.deal-card p{font-size:13px;line-height:1.5;color:var(--muted);margin:8px 0}.deal-meta{display:flex;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:11px}.deal-badge{background:#263750;border-radius:7px;padding:4px 7px}.deal-price{font-size:18px;font-weight:800;color:var(--green);margin-top:8px}.deal-link{display:inline-block;margin-top:10px;color:#a9ffd1;background:#174a35;border-radius:9px;padding:9px 11px;text-decoration:none;font-size:12px;font-weight:700}.deal-note{font-size:11px;color:var(--muted);margin:0 2px 12px;line-height:1.5}
 </style></head>
 <body><main class="wrap">
 <header><div class="eyebrow">Teknoloji fırsat radarı</div><h1>Fırsat Avcısı</h1><p class="sub">Gerçek indirimleri yakalamak için fiyatı, geçmişi ve fırsat kalitesini tek yerde izle.</p></header>
@@ -15,6 +16,9 @@
 <div class="controls"><input id="search" type="search" placeholder="Ürün ara (ör. SSD, telefon)" aria-label="Ürün ara"><select id="category" aria-label="Kategori"><option value="all">Tüm kategoriler</option><option value="Bilgisayar">Bilgisayar parçaları</option><option value="Telefon">Telefon ve aksesuar</option><option value="Diğer">Diğer</option></select></div>
 <div class="controls"><select id="minimum" aria-label="Minimum indirim"><option value="0">Her indirim oranı</option><option value="10">%10 ve üzeri</option><option value="20" selected>%20 ve üzeri</option><option value="30">%30 ve üzeri</option></select><select id="sort" aria-label="Sıralama"><option value="score">Fırsat kalitesi</option><option value="discount">İndirim oranı</option><option value="price">En düşük fiyat</option></select><button id="favoritesOnly" type="button">♡ Takip ettiklerim</button></div>
 <div class="sectionhead"><h2>Ürünler ve fırsatlar</h2><span id="resultLabel">Yükleniyor</span></div><section class="list" id="products" aria-live="polite"><div class="empty">Veriler yükleniyor…</div></section>
+<div class="sectionhead"><h2>Toplanan fırsatlar</h2><span id="dealCount">Yükleniyor</span></div>
+<p class="deal-note">Forum ve fırsat kaynaklarından toplanan bildirimlerdir. Fiyat ve stok bilgileri mağazada ayrıca doğrulanmalıdır.</p>
+<section class="list" id="deals" aria-live="polite"><div class="empty">Fırsatlar yükleniyor…</div></section>
 <footer>Fiyatlar Supabase veritabanından okunur. İndirim oranı, en yeni fiyat ile önceki kayıtlı fiyat karşılaştırılabiliyorsa hesaplanır. Veritabanına gerçek mağaza fiyatı eklenmediyse burada gerçek fırsat görünmez. Tarayıcıda takip listesi bu cihazda saklanır.</footer>
 </main>
 <script>
@@ -22,7 +26,7 @@ const SUPABASE_URL = "https://yvrzydhajlfdoylissok.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_PslURaSqr8xGwNsf-nTJWw_8zb0JMXI";
 const fmt=n=>new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",maximumFractionDigits:2}).format(n);
 const el=id=>document.getElementById(id);
-let products=[],favorites=new Set(JSON.parse(localStorage.getItem("fa-favorites")||"[]")),favoritesOnly=false;
+let products=[],deals=[],favorites=new Set(JSON.parse(localStorage.getItem("fa-favorites")||"[]")),favoritesOnly=false;
 function status(message,type=""){el("status").className="status "+type;el("status").textContent=message}
 async function api(path){
  const response=await fetch(SUPABASE_URL+"/rest/v1/"+path,{headers:{"apikey":SUPABASE_PUBLISHABLE_KEY,"Authorization":"Bearer "+SUPABASE_PUBLISHABLE_KEY}});
@@ -44,9 +48,32 @@ async function loadProducts(){
    const discount=now&&prev&&prev.price>0?Math.max(0,Math.round((prev.price-now.price)/prev.price*100)):null;
    return {id:p.id,name:p.name,brand:p.brand||"",category:p.category,emoji:p.category==="Bilgisayar"?"💾":p.category==="Telefon"?"📱":"🔌",price:now?Number(now.price):null,old:prev?Number(prev.price):null,discount,score:discount===null?0:Math.min(100,discount*2),store:l?.stores?.name||"Mağaza eklenmedi",url:l?.product_url||"",history:now?"Son kayıt: "+new Date(now.captured_at).toLocaleString("tr-TR"):"Henüz fiyat kaydı yok"}
   });
-  status("Supabase bağlantısı başarılı. "+raw.length+" ürün kaydı okundu. Canlı mağaza taraması henüz kurulmadı.","ok");
-  render()
- }catch(e){status("Veritabanına erişilemedi. "+e.message+" — RLS politikalarını ve API bilgilerini kontrol et.","error");el("products").innerHTML='<div class="empty">Ürünler yüklenemedi. Supabase tablo izinlerini ve bağlantı ayarlarını kontrol et.</div>'}
+  status("Supabase bağlantısı başarılı. "+raw.length+" ürün kaydı okundu. Fırsat bildirimleri de yükleniyor.","ok");
+  render();
+  await loadDeals()
+ }catch(e){status("Veritabanına erişilemedi. "+e.message+" — RLS politikalarını ve API bilgilerini kontrol et.","error");el("products").innerHTML='<div class="empty">Ürünler yüklenemedi. Supabase tablo izinlerini ve bağlantı ayarlarını kontrol et.</div>';await loadDeals()}
+}
+async function loadDeals(){
+ try{
+  const rows=await api("deal_reports?select=id,title,content_url,summary,reported_price,coupon_code,published_at,discovered_at,status,deal_sources(name)&status=in.(pending,verified)&order=discovered_at.desc&limit=100");
+  deals=rows;
+  renderDeals();
+ }catch(e){
+  el("dealCount").textContent="Yüklenemedi";
+  el("deals").innerHTML='<div class="empty">Fırsatlar yüklenemedi. Supabase tablosunun SELECT iznini kontrol et.</div>';
+ }
+}
+function renderDeals(){
+ const q=el("search").value.trim().toLocaleLowerCase("tr-TR");
+ const items=deals.filter(d=>!q||(d.title||"").toLocaleLowerCase("tr-TR").includes(q)||(d.summary||"").toLocaleLowerCase("tr-TR").includes(q)||(d.deal_sources?.name||"").toLocaleLowerCase("tr-TR").includes(q)));
+ el("dealCount").textContent=items.length+" fırsat";
+ el("deals").innerHTML=items.length?items.map(d=>{
+  const date=d.published_at||d.discovered_at;
+  const dateText=date?new Date(date).toLocaleString("tr-TR"):"Tarih belirtilmemiş";
+  const source=d.deal_sources?.name||"Fırsat kaynağı";
+  const statusText=d.status==="verified"?"Doğrulanmış":"Kontrol bekliyor";
+  return `<article class="deal-card"><h3>${escapeHtml(d.title||"Başlıksız fırsat")}</h3><div class="deal-meta"><span class="deal-badge">${escapeHtml(source)}</span><span class="deal-badge">${statusText}</span><span>${escapeHtml(dateText)}</span></div>${d.summary?`<p>${escapeHtml(d.summary.slice(0,450))}</p>`:""}${d.reported_price!==null&&d.reported_price!==undefined?`<div class="deal-price">Bildirilen fiyat: ${fmt(Number(d.reported_price))}</div>`:""}${d.coupon_code?`<p>Kupon kodu: <strong>${escapeHtml(d.coupon_code)}</strong></p>`:""}<a class="deal-link" href="${escapeHtml(d.content_url)}" target="_blank" rel="noopener noreferrer">Kaynağa git ↗</a></article>`;
+ }).join(""):'<div class="empty">Aramanla eşleşen fırsat yok.</div>';
 }
 function render(){
  const q=el("search").value.trim().toLocaleLowerCase("tr-TR"),cat=el("category").value,min=Number(el("minimum").value),sort=el("sort").value;
@@ -62,7 +89,7 @@ function render(){
  el("products").innerHTML=items.length?items.map(p=>`<article class="product"><div class="emoji">${p.emoji}</div><div><div class="producttop"><div class="name">${escapeHtml(p.name)}</div><span class="discount">${p.discount===null?"Fiyat bekleniyor":"-%"+p.discount}</span></div><div class="meta">${escapeHtml(p.category)}${p.brand?" · "+escapeHtml(p.brand):""} · ${escapeHtml(p.store)}</div><div class="prices"><span class="current">${p.price===null?"Fiyat yok":fmt(p.price)}</span>${p.old!==null?`<span class="old">${fmt(p.old)}</span>`:""}</div><div class="score">${p.discount===null?"İndirim doğrulanamadı":"Kayıtlı fiyat değişimine göre: "+p.discount+"% düşüş"}</div><div class="meta">${escapeHtml(p.history)}</div><div class="actions"><button class="fav" data-fav="${escapeHtml(String(p.id))}">${favorites.has(p.id)?"★ Takip ediliyor":"☆ Takibe al"}</button>${p.url?`<button data-open="${escapeHtml(p.url)}">Mağazaya git</button>`:""}</div></div></article>`).join(""):'<div class="empty">Bu filtrelerle eşleşen ürün yok. Veritabanına ürün ekleyerek başlayabiliriz.</div>';
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-["search","category","minimum","sort"].forEach(id=>el(id).addEventListener(id==="search"?"input":"change",render));
+["search","category","minimum","sort"].forEach(id=>el(id).addEventListener(id==="search"?"input":"change",()=>{render();if(id==="search")renderDeals()}));
 el("favoritesOnly").addEventListener("click",()=>{favoritesOnly=!favoritesOnly;el("favoritesOnly").classList.toggle("active",favoritesOnly);el("favoritesOnly").textContent=favoritesOnly?"♥ Takip ettiklerim açık":"♡ Takip ettiklerim";render()});
 el("products").addEventListener("click",e=>{const f=e.target.closest("[data-fav]");if(f){const id=f.dataset.fav;favorites.has(id)?favorites.delete(id):favorites.add(id);localStorage.setItem("fa-favorites",JSON.stringify([...favorites]));render();return}const o=e.target.closest("[data-open]");if(o)window.open(o.dataset.open,"_blank","noopener,noreferrer")});
 if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
