@@ -50,7 +50,12 @@ async function loadProducts(){
 }
 function render(){
  const q=el("search").value.trim().toLocaleLowerCase("tr-TR"),cat=el("category").value,min=Number(el("minimum").value),sort=el("sort").value;
- let items=products.filter(p=>(!q||(p.name+" "+p.brand).toLocaleLowerCase("tr-TR").includes(q))&&(cat==="all"||p.category===cat)&&(p.discount??-1)>=min&&(!favoritesOnly||favorites.has(p.id)));
+ let items=products.filter(p=>
+  (!q||(p.name+" "+p.brand).toLocaleLowerCase("tr-TR").includes(q)) &&
+  (cat==="all"||p.category===cat) &&
+  (p.discount===null ? min===0 : p.discount>=min) &&
+  (!favoritesOnly||favorites.has(p.id))
+);
  items.sort((a,b)=>sort==="discount"?(b.discount??-1)-(a.discount??-1):sort==="price"?(a.price??Infinity)-(b.price??Infinity):(b.score-a.score));
  el("count").textContent=items.length;el("saved").textContent=favorites.size;
  const withDiscount=items.filter(p=>p.discount!==null);el("avg").textContent=withDiscount.length?Math.round(withDiscount.reduce((s,p)=>s+p.discount,0)/withDiscount.length)+"%":"—";
