@@ -52,7 +52,7 @@ function render(){
  const q=el("search").value.trim().toLocaleLowerCase("tr-TR"),cat=el("category").value,min=Number(el("minimum").value),sort=el("sort").value;
  let items=products.filter(p=>
   (cat==="all"||p.category===cat) &&
-  (p.discount===null ? min===0 : p.discount>=min) &&
+  (p.discount == null ? min===0 : p.discount>=min) &&
   (!favoritesOnly||favorites.has(p.id))
 );
  items.sort((a,b)=>sort==="discount"?(b.discount??-1)-(a.discount??-1):sort==="price"?(a.price??Infinity)-(b.price??Infinity):(b.score-a.score));
