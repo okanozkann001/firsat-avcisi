@@ -65,7 +65,7 @@ async function loadDeals(){
 }
 function renderDeals(){
  const q=el("search").value.trim().toLocaleLowerCase("tr-TR");
- const items=deals.filter(d=>!q||(d.title||"").toLocaleLowerCase("tr-TR").includes(q)||(d.summary||"").toLocaleLowerCase("tr-TR").includes(q)||(d.deal_sources?.name||"").toLocaleLowerCase("tr-TR").includes(q)));
+ const items=deals.filter(d=>!q||(d.title||"").toLocaleLowerCase("tr-TR").includes(q)||(d.summary||"").toLocaleLowerCase("tr-TR").includes(q)||(d.deal_sources?.name||"").toLocaleLowerCase("tr-TR").includes(q));
  el("dealCount").textContent=items.length+" fırsat";
  el("deals").innerHTML=items.length?items.map(d=>{
   const date=d.published_at||d.discovered_at;
